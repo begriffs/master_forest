@@ -7,6 +7,7 @@ module MasterForest
       if raw.nil?
         @l, @r  = left, right
         @parsed = @l and @r
+        raise "Empty node" unless @parsed
       end
     end
 

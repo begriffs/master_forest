@@ -71,6 +71,9 @@ describe MasterForest do
       it 'string overrides explicit children' do
         (Term.new 'i', s, k).to_s.should == 'i'
       end
+      it 'refuses to create an entirely blank node' do
+        expect { Term.new nil }.to raise_error
+      end
     end
   end
 
