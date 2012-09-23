@@ -77,6 +77,22 @@ describe MasterForest do
     end
   end
 
+  context 'validation' do
+    let (:good) { Term.new '``ii`ii' }
+    let (:bad)  { Term.new '`iX'     }
+    let (:long) { Term.new '`iii'    }
+
+    it 'says valid terms are valid' do
+      good.should be_valid
+    end
+    it 'does not allow symbols other than `,s,k,i' do
+      bad.should_not be_valid
+    end
+    it 'does not allow extraneous characters at end' do
+      long.should_not be_valid
+    end
+  end
+
   context 'reduction' do
     let(:s)    { Term.new 's'       }
     let(:ii)   { Term.new '`ii'     }

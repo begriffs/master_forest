@@ -19,17 +19,21 @@ module MasterForest
       to_s == other.to_s
     end
 
+    def valid?
+      /[^`ski]/.match(to_s).nil? and (subterm_length(0) == to_s.length)
+    end
+
     def leaf?
       to_s[0] != '`'
     end
 
     def l
-      shallow_parse if not @parsed
+      shallow_parse unless @parsed
       @l
     end
 
     def r
-      shallow_parse if not @parsed
+      shallow_parse unless @parsed
       @r
     end
 
