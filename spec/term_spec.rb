@@ -55,8 +55,8 @@ describe MasterForest do
       end
     end
 
-    context 'comparison' do
-      it 'a term equals itself' do
+    describe '#==' do
+      it 'is reflexive' do
         (Term.new '``skk').should == (Term.new '``skk')
       end
       it 'distinct normal terms are not equal' do
@@ -77,12 +77,14 @@ describe MasterForest do
     end
   end
 
-  context 'validation' do
+  describe '#valid?' do
+    let (:leaf) { Term.new 'k'       }
     let (:good) { Term.new '``ii`ii' }
     let (:bad)  { Term.new '`iX'     }
     let (:long) { Term.new '`iii'    }
 
     it 'says valid terms are valid' do
+      leaf.should be_valid
       good.should be_valid
     end
     it 'does not allow symbols other than `,s,k,i' do
@@ -93,7 +95,7 @@ describe MasterForest do
     end
   end
 
-  context 'reduction' do
+  describe '#reduce' do
     let(:s)    { Term.new 's'       }
     let(:ii)   { Term.new '`ii'     }
     let(:ki)   { Term.new '`ki'     }
@@ -123,6 +125,32 @@ describe MasterForest do
       reduced.to_s.should == '``ik`is'
       reduced.l.to_s.should == '`ik'
       reduced.r.to_s.should == '`is'
+    end
+  end
+
+  describe '#normal' do
+    let (:leaf) { Term.new 'i'   }
+    let (:app)  { Term.new '`ki' }
+    let (:ii)   { Term.new '`ii' }
+    let (:active_l) { Term.new '``iik'}
+    let (:active_r) { Term.new '`k`ii'}
+
+    context 'given a leaf' do
+      it 'always says normal' do
+        leaf.should be_normal
+      end
+    end
+    context 'given an application' do
+      it 'is sometimes normal' do
+        app.should be_normal
+      end
+      it 'i application is never normal' do
+        ii.should_not be_normal
+      end
+      it 'detects active subterms' do
+        active_l.should_not be_normal
+        active_r.should_not be_normal
+      end
     end
   end
 end

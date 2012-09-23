@@ -20,7 +20,13 @@ module MasterForest
     end
 
     def valid?
-      /[^`ski]/.match(to_s).nil? and (subterm_length(0) == to_s.length)
+      /[^`ski]/.match(to_s).nil? and (subterm_length(0)+1 == to_s.length)
+    end
+
+    def normal?
+      return true if leaf?
+      return false if /^`(i|`k|``s)/.match(to_s)
+      return l.normal? && r.normal?
     end
 
     def leaf?
