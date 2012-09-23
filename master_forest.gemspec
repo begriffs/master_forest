@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = MasterForest::VERSION
   gem.authors       = ["Joe Nelson"]
   gem.email         = ["cred+github@begriffs.com"]
-  gem.description   = %q{Yeah, what the summary says}
+  gem.description   = %q{THE MASTER FOREST: ONLY THE ELITE ARE ALLOWED TO ENTER!}
   gem.summary       = %q{Combinatory logic parsing and reduction}
   gem.homepage      = ""
 
