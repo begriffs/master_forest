@@ -122,9 +122,17 @@ describe MasterForest do
 
     it 'applies s combinator' do
       reduced = siks.reduce
-      reduced.to_s.should == '``ik`is'
-      reduced.l.to_s.should == '`ik'
-      reduced.r.to_s.should == '`is'
+      reduced.to_s.should == '``is`ks'
+      reduced.l.to_s.should == '`is'
+      reduced.r.to_s.should == '`ks'
+    end
+  end
+
+  describe '#fully_reduce' do
+    let (:biggie) { Term.new '`````s`ss`ss`ssss' }
+
+    it 'runs through many reductions and succeeds' do
+      biggie.fully_reduce.to_s.should == '``s``s``s``ss``ss``ssss``s``s``ss``ss``ssss``s``s``ss``ss``ssss``ss``s``ss``ss``ssss``s``s``s``ss``ss``ssss``s``s``ss``ss``ssss``s``s``ss``ss``ssss``ss``s``ss``ss``ssss``s``s``s``ss``ss``ssss``s``s``ss``ss``ssss``s``s``ss``ss``ssss``ss``s``ss``ss``ssss``ss``s``s``ss``ss``ssss``s``s``ss``ss``ssss``s``s``ss``ss``ssss``ss``s``ss``ss``ssss'
     end
   end
 

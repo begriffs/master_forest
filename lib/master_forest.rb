@@ -44,14 +44,30 @@ module MasterForest
     end
 
     def reduce
+      return self if leaf?
+
       return r   if to_s.start_with? '`i'
       return l.r if to_s.start_with? '``k'
       if to_s.start_with? '```s'
-        return Term.new nil,
-          (Term.new nil, l.l.r, l.r),
-          (Term.new nil, l.l.r, r)
+        return join(join(l.l.r, r), join(l.r, r))
       end
+
+      reduced = l.reduce
+      return join(reduced, r) if reduced != l
+      reduced = r.reduce
+      return join(l, reduced) if reduced != r
+
       return self
+    end
+
+    def fully_reduce depth = Float::INFINITY
+      cur = self
+      1.upto(depth) do
+        reduced = cur.reduce
+        return reduced if reduced.normal?
+        cur = reduced
+      end
+      cur
     end
 
     private
@@ -71,6 +87,10 @@ module MasterForest
       len = subterm_length 1
       @l  = Term.new @raw[1     .. 1+len]
       @r  = Term.new @raw[2+len .. -1   ]
+    end
+
+    def join left, right
+     Term.new nil, left, right
     end
   end
 end
