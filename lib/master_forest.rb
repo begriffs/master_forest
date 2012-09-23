@@ -2,16 +2,24 @@ require "master_forest/version"
 
 module MasterForest
   class Term
-    def initialize raw
+    def initialize raw, left = nil, right = nil
       @raw = raw
+      if raw.nil?
+        @l, @r  = left, right
+        @parsed = @l and @r
+      end
     end
 
     def to_s
-      @raw
+      @raw ||= ['`', l.to_s, r.to_s].join
+    end
+
+    def ==(other)
+      to_s == other.to_s
     end
 
     def leaf?
-      @raw[0] != '`'
+      to_s[0] != '`'
     end
 
     def l
@@ -22,6 +30,17 @@ module MasterForest
     def r
       shallow_parse if not @parsed
       @r
+    end
+
+    def reduce
+      return r   if to_s.start_with? '`i'
+      return l.r if to_s.start_with? '``k'
+      if to_s.start_with? '```s'
+        return Term.new nil,
+          (Term.new nil, l.l.r, l.r),
+          (Term.new nil, l.l.r, r)
+      end
+      return self
     end
 
     private
