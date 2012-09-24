@@ -43,8 +43,12 @@ module MasterForest
 
     def reduce
       return self if leaf?
-      reduced = basic_reduce
-      return reduced if reduced
+
+      return r   if to_s.start_with? '`i'
+      return l.r if to_s.start_with? '``k'
+      if to_s.start_with? '```s'
+        return join(join(l.l.r, r), join(l.r, r))
+      end
 
       reduced = l.reduce
       return join(reduced, r) if reduced != l
@@ -85,15 +89,6 @@ module MasterForest
 
     def join left, right
       Term.new nil, left, right
-    end
-
-    def basic_reduce
-      return r   if to_s.start_with? '`i'
-      return l.r if to_s.start_with? '``k'
-      if to_s.start_with? '```s'
-        return join(join(l.l.r, r), join(l.r, r))
-      end
-      return nil
     end
   end
 end
