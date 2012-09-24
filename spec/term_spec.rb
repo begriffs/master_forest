@@ -1,6 +1,8 @@
 require 'master_forest'
 include MasterForest
 
+require 'ruby-prof'
+
 describe MasterForest do
   context 'parsing' do
     let(:s)    { Term.new 's'     }

@@ -6,15 +6,13 @@ def show_performance &blk
   print Benchmark.measure &blk
 end
 
-[Term].each do |impl|
+[Term, MemcacheTerm].each do |impl|
   puts "*"*80
   puts "Benchmarking #{impl} implementation"
   [
-    "```````sss`ssisss", "`````s``ssii`ssss",
-    "`````sii``ss`ssss", "`````sii```ssssss",
-    "```````s`ssssisss", "`````s`ss`ss`ssss",
-    "``````ssi``ssssss", "``````ssi`ss`ssss",
-    "`````s`s`ssi`ssss"
+    "```````sss`ssisss", "`````s``ssii`ssss", "`````sii``ss`ssss",
+    "`````sii```ssssss", "```````s`ssssisss", "`````s`ss`ss`ssss",
+    "``````ssi``ssssss", "``````ssi`ss`ssss", "`````s`s`ssi`ssss"
   ].each do |term|
     puts "Reduce #{term}"
     2.times do |i|
