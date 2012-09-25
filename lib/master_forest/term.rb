@@ -57,7 +57,9 @@ module MasterForest
       reduced = l.reduce
       return join(reduced, r) if reduced != l
       reduced = r.reduce
-      return join(l, reduced)
+      return join(l, reduced) if reduced != r
+
+      return self
     end
 
     def fully_reduce depth = Float::INFINITY
