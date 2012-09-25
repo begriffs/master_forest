@@ -22,9 +22,13 @@ module MasterForest
     end
 
     def normal?
-      return true if leaf?
-      return false if /^`(i|`k|``s)/.match(to_s)
-      return l.normal? && r.normal?
+      return @normal ||= if leaf?
+                           true
+                         elsif /^`(i|`k|``s)/.match(to_s)
+                           false
+                         else
+                           l.normal? && r.normal?
+                         end
     end
 
     def leaf?
