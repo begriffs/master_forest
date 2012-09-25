@@ -144,6 +144,7 @@ describe MasterForest do
     let (:ii)   { Term.new '`ii' }
     let (:active_l) { Term.new '``iik'}
     let (:active_r) { Term.new '`k`ii'}
+    let (:big)      { Term.new '``````ssi``ssssss'}
 
     context 'given a leaf' do
       it 'always says normal' do
@@ -160,6 +161,9 @@ describe MasterForest do
       it 'detects active subterms' do
         active_l.should_not be_normal
         active_r.should_not be_normal
+      end
+      it 'detects deeply nested active terms' do
+        big.should_not be_normal
       end
     end
   end

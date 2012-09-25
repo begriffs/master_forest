@@ -12,11 +12,14 @@ module MasterForest
       redices = [self]
       1.upto(depth) do
         reduced = @cache.get cur.to_s
-        return MemcacheTerm.new(reduced) if reduced
+        if reduced
+          cache! redices, reduced
+          return reduced
+        end
 
         reduced = cur.reduce
         if reduced.normal?
-          redices.each { |redex| @cache.set redex.to_s, reduced.to_s }
+          cache! redices, reduced
           return reduced
         else
           redices << reduced
@@ -25,5 +28,14 @@ module MasterForest
       end
       cur
     end
+
+    private
+
+    def cache! redices, redux
+      redices.each { |redex|
+        @cache.set redex.to_s, redux.to_s
+      }
+    end
+
   end
 end
