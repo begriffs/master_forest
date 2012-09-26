@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["cred+github@begriffs.com"]
   gem.description   = %q{THE MASTER FOREST: ONLY THE ELITE ARE ALLOWED TO ENTER!}
   gem.summary       = %q{Combinatory logic parsing and reduction}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/begriffs/master_forest"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
